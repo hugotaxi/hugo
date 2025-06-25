@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hugo Táxi - Calculadora de Corridas</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid #FFD700;
+        }
+        h1 {
+            color: #000;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        h1:after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: #FFD700;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #444;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        input:focus {
+            border-color: #FFD700;
+            outline: none;
+            box-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+        }
+        #map {
+            height: 350px;
+            width: 100%;
+            margin: 25px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+            padding: 15px 0;
+        }
+        .loading {
+            text-align: center;
+            margin: 15px 0;
+            display: none;
+        }
+        .loading p {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #FFD700;
+            color: #000;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .valor {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        #result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #FFD700;
+        }
+        #result strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        #result span {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .taxi-icon {
+            display: inline-block;
+            margin-right: 10px;
+            color: #FFD700;
+        }
+        .header-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header-logo img {
+            height: 60px;
+        }
+        .btn-voltar {
+            display: block;
+            width: 150px;
+            margin: 25px auto 0;
+            padding: 12px 20px;
+            background-color: #FFD700;
+            color: #000;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn-voltar:hover {
+            background-color: #e6c200;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .btn-voltar:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        .btn-agendar {
+            display: none;
+            width: 150px;
+            margin: 15px auto 0;
+            padding: 12px 20px;
+            background-color: #25D366;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn-agendar:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .btn-agendar:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-logo">
+            <h1><span class="taxi-icon">🚖</span> Hugo Táxi <span class="taxi-icon">🚖</span></h1>
+            <p style="color: #666; margin-top: -15px;">Calculadora de Corridas em Vitória da Conquista</p>
+        </div>
+        
+        <div class="form-group">
+            <label for="origem"><span class="taxi-icon">📍</span> Saída:</label>
+            <input type="text" id="origem" placeholder="Digite o endereço de partida em Vitória da Conquista" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="destino"><span class="taxi-icon">🏁</span> Destino:</label>
+            <input type="text" id="destino" placeholder="Digite o endereço de destino (qualquer local)" required>
+        </div>
+        
+        <div class="loading" id="loading">
+            <p>Calculando rota e valor da corrida...</p>
+        </div>
+        
+        <div id="map"></div>
+        
+        <div id="result">
+            <strong>Distância:</strong> <span id="distancia"></span>
+            <strong>Tempo estimado:</strong> <span id="tempo"></span>
+            <strong>Valor estimado da corrida:</strong> <span class="valor" id="valor"></span>
+        </div>
+
+        <div class="button-container">
+            
+            <button class="btn-voltar" onclick="window.location.href = 'index.html'">Voltar</button>
+            <button class="btn-agendar" id="btnAgendar">Agendar</button>
+        </div>
+    </div>
+    
+    <footer>
+        © 2025 Hugo Táxi - Vitória da Conquista - Todos os direitos reservados
+    </footer>
+
+    <!-- Carrega a API do Google Maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDU0q-M-K3AC20rnWpvGe6JvtRaiBdek7I&libraries=places&callback=initMap" async defer></script>
+    
+    <script>
+        let map;
+        let directionsService;
+        let directionsRenderer;
+        let origemMarker = null;
+        let destinoMarker = null;
+        const valorPorKm = 3.6;   // Valor por quilômetro para distâncias <= 25.5km
+        const valorPorKmLonga = 2.85; // Valor por quilômetro para distâncias > 25.5km
+        const taxaBase = 4.4;     // Taxa base fixa
+        const whatsappNumber = "77988331234"; // Número de WhatsApp para agendamento
+        
+        function initMap() {
+            // Centraliza o mapa em Vitória da Conquista, BA
+            const vitoriaDaConquista = {lat: -14.8661, lng: -40.8394};
+            
+            // Inicializa o mapa
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: vitoriaDaConquista,
+                zoom: 13,
+                styles: [
+                    {
+                        "featureType": "poi",
+                        "stylers": [
+                            { "visibility": "off" }
+                        ]
+                    }
+                ]
+            });
+            
+            // Inicializa os serviços de rota
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer({
+                polylineOptions: {
+                    strokeColor: "#FFD700",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 5
+                },
+                suppressMarkers: true
+            });
+            directionsRenderer.setMap(map);
+            
+            // Configura o autocomplete para os campos de endereço
+            const origemInput = document.getElementById('origem');
+            const destinoInput = document.getElementById('destino');
+            
+            // Define as opções de autocomplete para origem (com preferência por Vitória da Conquista)
+            const optionsOrigem = {
+                types: ['geocode', 'establishment'],
+                componentRestrictions: {country: 'br'},
+                bounds: {
+                    north: -14.7661,
+                    south: -14.9661,
+                    east: -40.7394,
+                    west: -40.9394
+                },
+                strictBounds: true
+            };
+            
+            // Para destino, não aplicamos restrições de localização
+            const optionsDestino = {
+                types: ['geocode', 'establishment'],
+                componentRestrictions: {country: 'br'}
+            };
+            
+            const autocompleteOrigem = new google.maps.places.Autocomplete(origemInput, optionsOrigem);
+            const autocompleteDestino = new google.maps.places.Autocomplete(destinoInput, optionsDestino);
+            
+            // Adiciona listener para quando o local de origem for selecionado
+            autocompleteOrigem.addListener('place_changed', function() {
+                const place = autocompleteOrigem.getPlace();
+                if (!place.geometry) {
+                    return;
+                }
+                
+                // Remove o marcador anterior se existir
+                if (origemMarker) {
+                    origemMarker.setMap(null);
+                }
+                
+                // Cria um novo marcador na posição selecionada
+                origemMarker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        fillColor: "#FFD700",
+                        fillOpacity: 1,
+                        strokeColor: "#000",
+                        strokeWeight: 1,
+                        scale: 8
+                    },
+                    title: 'Origem'
+                });
+                
+                // Centraliza o mapa no marcador
+                map.setCenter(place.geometry.location);
+                
+                // Se já tiver destino definido, calcula o trajeto automaticamente
+                if (document.getElementById('destino').value) {
+                    calcularTrajeto();
+                }
+            });
+            
+            // Adiciona listener para quando o local de destino for selecionado
+            autocompleteDestino.addListener('place_changed', function() {
+                const place = autocompleteDestino.getPlace();
+                if (!place.geometry) {
+                    return;
+                }
+                
+                // Remove o marcador anterior se existir
+                if (destinoMarker) {
+                    destinoMarker.setMap(null);
+                }
+                
+                // Cria um novo marcador na posição selecionada
+                destinoMarker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        fillColor: "#FF0000",
+                        fillOpacity: 1,
+                        strokeColor: "#000",
+                        strokeWeight: 1,
+                        scale: 8
+                    },
+                    title: 'Destino'
+                });
+                
+                // Se já tiver origem definida, calcula o trajeto automaticamente
+                if (document.getElementById('origem').value) {
+                    calcularTrajeto();
+                }
+            });
+            
+            // Configura o botão de agendamento
+            document.getElementById('btnAgendar').addEventListener('click', agendarCorrida);
+        }
+        
+        function calcularTrajeto() {
+            const origem = document.getElementById('origem').value;
+            const destino = document.getElementById('destino').value;
+            
+            if (!origem || !destino) {
+                return;
+            }
+            
+            // Mostra o loading
+            document.getElementById('loading').style.display = 'block';
+            
+            // Configura a requisição para a API de rotas (modo fixo como DRIVING - Carro)
+            const request = {
+                origin: origem,
+                destination: destino,
+                travelMode: google.maps.TravelMode.DRIVING,
+                unitSystem: google.maps.UnitSystem.METRIC
+            };
+            
+            // Faz a chamada para a API de rotas
+            directionsService.route(request, function(response, status) {
+                // Esconde o loading
+                document.getElementById('loading').style.display = 'none';
+                
+                if (status === 'OK') {
+                    // Exibe os resultados
+                    const distancia = response.routes[0].legs[0].distance.text;
+                    const distanciaNumero = parseFloat(response.routes[0].legs[0].distance.text.replace(',', '.').replace(/[^\d.-]/g, ''));
+                    const tempo = response.routes[0].legs[0].duration.text;
+                    
+                    // Calcula o valor conforme a distância
+                    let valorTotal;
+                    if (distanciaNumero <= 25.5) {
+                        valorTotal = (distanciaNumero * valorPorKm + taxaBase);
+                    } else {
+                        valorTotal = (distanciaNumero * valorPorKmLonga);
+                    }
+                    
+                    // Formata o valor para exibição
+                    const valorFormatado = valorTotal.toLocaleString('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+                    
+                    document.getElementById('distancia').textContent = distancia;
+                    document.getElementById('tempo').textContent = tempo;
+                    document.getElementById('valor').textContent = valorFormatado;
+                    
+                    // Mostra o botão de agendamento
+                    document.getElementById('btnAgendar').style.display = 'block';
+                    
+                    // Renderiza a rota no mapa
+                    directionsRenderer.setDirections(response);
+                } else {
+                    alert('Não foi possível calcular a rota: ' + status);
+                    document.getElementById('distancia').textContent = '-';
+                    document.getElementById('tempo').textContent = '-';
+                    document.getElementById('valor').textContent = '-';
+                    document.getElementById('btnAgendar').style.display = 'none';
+                }
+            });
+        }
+        
+        function agendarCorrida() {
+            const origem = document.getElementById('origem').value;
+            const destino = document.getElementById('destino').value;
+            const distancia = document.getElementById('distancia').textContent;
+            const tempo = document.getElementById('tempo').textContent;
+            const valor = document.getElementById('valor').textContent;
+            
+            // Cria a mensagem para o WhatsApp
+            const mensagem = `Olá, gostaria de agendar uma corrida:\n\n` +
+                            `*Saída:* ${origem}\n` +
+                            `*Destino:* ${destino}\n` +
+                            `*Distância:* ${distancia}\n` +
+                            `*Tempo estimado:* ${tempo}\n` +
+                            `*Valor estimado:* ${valor}\n\n` +
+                            `Por favor, confirme a disponibilidade.`;
+            
+            // Codifica a mensagem para URL
+            const mensagemCodificada = encodeURIComponent(mensagem);
+            
+            // Cria o link do WhatsApp
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${mensagemCodificada}`;
+            
+            // Abre o WhatsApp em uma nova aba
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
