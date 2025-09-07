@@ -650,12 +650,11 @@
             <a href="#" id="aboutLink">Sobre</a>
             <a href="#servicos">Serviços</a>
             <a href="#precos">Preços</a>
-            <a href="http://orcamento.use.taxi.br" target="_blank">Orçamento</a>
             <a href="#contato">Contato</a>
         </nav>
         
         <div class="hero-content">
-            <h1>Oferecemos o melhor serviço de táxi da cidade com motorista experiente e veículo confortável para todas as suas necessidades de transporte.</h1>
+            <h1>Oferecemos o melhor serviço de táxi da cidade com motorista experiente veículo confortável para todas as suas necessidades de transporte.</h1>
             <h2>Hugo Táxi</h2>
             <button class="btn" id="whatsappBtn">Whatsapp</button>
         </div>
@@ -711,15 +710,15 @@
         </div>
         <div class="pricing">
             <div class="price-card">
-                <h3>Táxi Urbano</h3>
-                <div class="price">R$2,50/km</div>
+                <h3>Táxi Orçamento</h3>
+                <div class="price">Verifique</div>
                 <ul>
-                    <li>Bandeirada: R$4,20</li>
-                    <li>Hora parada: R$30,00</li>
-                    <li>Tarifa mínima: R$8,00</li>
-                    <li>Wi-Fi a bordo</li>
+                    <li>Local de Saída</li>
+                    <li>Destino</li>
+                    <li>Tempo de viagem</li>
+                    <li>Valor</li>
                 </ul>
-                <button class="btn solicitar-btn" data-service="Táxi Urbano">Solicitar</button>
+                <button class="btn calcular-btn" data-service="Táxi Urbano">Calcular</button>
             </div>
             <div class="price-card">
                 <h3>Viagens Intermunicipais</h3>
@@ -742,6 +741,18 @@
                     <li>Bagagem: Grátis</li>
                 </ul>
                 <button class="btn solicitar-btn" data-service="Transporte Rural">Solicitar</button>
+            </div>
+
+            <div class="price-card">
+                <h3>Táxi Urbano</h3>
+                <div class="price">R$2,50/km</div>
+                <ul>
+                    <li>Bandeirada: R$4,20</li>
+                    <li>Hora parada: R$30,00</li>
+                    <li>Tarifa mínima: R$8,00</li>
+                    <li>Wi-Fi a bordo</li>
+                </ul>
+                <button class="btn solicitar-btn" data-service="Táxi Urbano">Solicitar</button>
             </div>
         </div>
     </section>
@@ -922,6 +933,15 @@
             btn.addEventListener('click', function() {
                 const service = this.getAttribute('data-service');
                 openFormModal(service);
+            });
+        });
+
+        // Add click event to "Calcular" button to redirect to orçamento site
+        const calcularBtns = document.querySelectorAll(".calcular-btn");
+        
+        calcularBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                window.open('https://orcamento.use.taxi.br', '_blank');
             });
         });
 
