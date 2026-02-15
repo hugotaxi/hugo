@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hugo Táxi - Serviço de Transporte em Vitória da Conquista</title>
+    <meta name="description" content="Hugo Táxi - Transporte confiável, agendamentos, viagens intermunicipais e transporte rural em Vitória da Conquista e região. Solicite seu orçamento pelo WhatsApp.">
+    <meta name="keywords" content="táxi, Vitória da Conquista, transporte, aeroporto, viagens, intermunicipal, rural, Hugo Táxi, agendamento, WhatsApp">
+    <meta name="author" content="Hugo Táxi">
+    
+    <title>Hugo Táxi | Transporte em Vitória da Conquista - Agende pelo WhatsApp</title>
     <style>
         * {
             margin: 0;
@@ -532,7 +536,51 @@
             text-align: center;
         }
 
-        @media (max-width: 768px) {
+
+        /* Ajustes extras de design (estilo app / mobile friendly) */
+        body {
+            background-color: #f3f4f6;
+        }
+        nav {
+            background: rgba(0,0,0,0.35);
+            border-radius: 999px;
+            padding: 10px 20px;
+            backdrop-filter: blur(6px);
+        }
+        nav a {
+            border-radius: 999px;
+        }
+        .btn, .form-submit {
+            border-radius: 999px;
+        }
+        .price-card, .service-card, .testimonial-card, .contact-card {
+            border-radius: 16px;
+        }
+        .hero h2 {
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        
+.autocomplete-list {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    max-height: 180px;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    z-index: 999;
+}
+.autocomplete-item {
+    padding: 10px;
+    cursor: pointer;
+}
+.autocomplete-item:hover {
+    background: #f0f0f0;
+}
+
+@media (max-width: 768px) {
             .contact-info-section {
                 flex-direction: column;
                 align-items: center;
@@ -543,7 +591,117 @@
                 width: 90%;
             }
         }
-    </style>
+    
+/* Glassmorphism Forte (High Blur) UNIFICADO para todos os modais */
+#aboutModal .modal-content,
+#formModal .form-content,
+#orcamentoModal .form-content {
+    background: rgba(255, 255, 255, 0.22) !important;
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.55) !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35) !important;
+    border-radius: 24px !important;
+}
+
+/* Inputs e botões dos modais de formulário */
+#formModal input, 
+#formModal button,
+#formModal textarea,
+#orcamentoModal input, 
+#orcamentoModal button,
+#orcamentoModal textarea {
+    background: rgba(255,255,255,0.45) !important;
+    border: 1px solid rgba(255,255,255,0.6) !important;
+    backdrop-filter: blur(18px) !important;
+    border-radius: 14px !important;
+}
+
+/* Botões principais dos modais de formulário */
+#formModal .form-submit,
+#orcamentoModal .form-submit {
+    background: rgba(255,255,255,0.70) !important;
+    color: #000 !important;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+#formModal .form-submit:hover,
+#orcamentoModal .form-submit:hover {
+    background: rgba(255,255,255,0.95) !important;
+}
+
+
+/* Fundo branco perolizado / prata para todos os modais */
+#aboutModal .modal-content,
+#formModal .form-content,
+#orcamentoModal .form-content {
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,0.95) 0%,
+        rgba(245,245,245,0.95) 40%,
+        rgba(230,230,230,0.95) 100%
+    ) !important;
+    border: 1px solid rgba(255,255,255,0.9) !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25) !important;
+    backdrop-filter: blur(8px) !important;
+    border-radius: 22px !important;
+}
+
+/* Inputs mais visíveis */
+#formModal input, 
+#formModal textarea,
+#orcamentoModal input,
+#orcamentoModal textarea {
+    background: rgba(255,255,255,0.9) !important;
+    border: 1px solid #d4d4d4 !important;
+    color: #000 !important;
+}
+
+/* Botões bem nítidos */
+#formModal .form-submit,
+#orcamentoModal .form-submit {
+    background: #ffffff !important;
+    border: 1px solid #cfcfcf !important;
+    color: #000 !important;
+    font-weight: 800 !important;
+}
+
+
+
+.orcamento-inline {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 15px;
+    border-radius: 14px;
+    display: flex;
+    gap: 10px;
+    width: 90%;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    top: 140px;
+    backdrop-filter: blur(8px);
+}
+
+.orcamento-inline input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+.orcamento-inline button {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.orcamento-inline button:hover {
+    background: #333;
+}
+</style>
 </head>
 <body>
     <!-- About Modal -->
@@ -645,18 +803,43 @@
         </div>
     </div>
 
-    <section class="hero">
-        <nav>
-            <a href="#" id="aboutLink">Sobre</a>
-            <a href="#servicos">Serviços</a>
-            <a href="#precos">Preços</a>
-            <a href="#contato">Contato</a>
-        </nav>
+    <section class="hero" id="home">
+        
+<nav>
+    <a href="#home" id="homeBtn">Inicio</a>
+    <a href="#" id="aboutLink">Sobre</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#" id="orcamentoLink">Orçamento</a>
+    <a href="#contato">Contato</a>
+</nav>
+
+
+
+
         
         <div class="hero-content">
             <h1>Oferecemos o melhor serviço de táxi da cidade com motorista experiente veículo confortável para todas as suas necessidades de transporte.</h1>
             <h2>Hugo Táxi</h2>
             <button class="btn" id="whatsappBtn">Whatsapp</button>
+
+<div class="orcamento-inline">
+    
+<div style="position:relative;">
+    <input type="text" id="partidaInline" placeholder="Local de partida">
+    <span onclick="startVoice('partidaInline')" 
+          style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:20px;">🎤</span>
+</div>
+
+    
+<div style="position:relative;">
+    <input type="text" id="destinoInline" placeholder="Local de destino">
+    <span onclick="startVoice('destinoInline')" 
+          style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:20px;">🎤</span>
+</div>
+
+    <button onclick="openOrcamentoFromInline()">Orçamento</button>
+</div>
+
         </div>
     </section>
 
@@ -700,59 +883,6 @@
                 <img src="https://i.ibb.co/N2qgHZkk/destination-1.png" alt="Ícone de viagens intermunicipais" style="width: 80px; height: 80px;">
                 <h3>Viagens Intermunicipais</h3>
                 <p>Serviço de táxi para viagens entre cidades com conforto e segurança.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="precos">
-        <div class="section-title">
-            <h2>Nossos Preços</h2>
-        </div>
-        <div class="pricing">
-            <div class="price-card">
-                <h3>Táxi Orçamento</h3>
-                <div class="price">Verifique</div>
-                <ul>
-                    <li>Local de Saída</li>
-                    <li>Destino</li>
-                    <li>Tempo de viagem</li>
-                    <li>Valor</li>
-                </ul>
-                <button class="btn calcular-btn" data-service="Táxi Urbano">Calcular</button>
-            </div>
-            <div class="price-card">
-                <h3>Viagens Intermunicipais</h3>
-                <div class="price">R$3,00/km</div>
-                <ul>
-                    <li>Preço fixo por destino</li>
-                    <li>Espera de até 2 horas</li>
-                    <li>Bagagem: Grátis</li>
-                    <li>Ar-condicionado incluso</li>
-                </ul>
-                <button class="btn solicitar-btn" data-service="Viagens Intermunicipais">Solicitar</button>
-            </div>
-            <div class="price-card">
-                <h3>Transporte Rural</h3>
-                <div class="price">R$4,00/km</div>
-                <ul>
-                    <li>Espera de até 3 Horas</li>
-                    <li>Ar-condicionado incluso</li>
-                    <li>Água e amenidades</li>
-                    <li>Bagagem: Grátis</li>
-                </ul>
-                <button class="btn solicitar-btn" data-service="Transporte Rural">Solicitar</button>
-            </div>
-
-            <div class="price-card">
-                <h3>Táxi Urbano</h3>
-                <div class="price">R$2,50/km</div>
-                <ul>
-                    <li>Bandeirada: R$4,20</li>
-                    <li>Hora parada: R$30,00</li>
-                    <li>Tarifa mínima: R$8,00</li>
-                    <li>Wi-Fi a bordo</li>
-                </ul>
-                <button class="btn solicitar-btn" data-service="Táxi Urbano">Solicitar</button>
             </div>
         </div>
     </section>
@@ -809,6 +939,16 @@
     </section>
 
     <script>
+
+// Fare calculation
+function calcularValor(distText){
+    // distText like "12.4 km"
+    let num = parseFloat(distText.replace(",", "."));
+    if(isNaN(num)) return "0,00";
+    let valor = 5.0 + 2.5 * num;
+    return valor.toFixed(2).replace(".", ",");
+}
+
         // Modal functionality
         const modal = document.getElementById("aboutModal");
         const btn = document.getElementById("aboutLink");
@@ -954,6 +1094,266 @@
 
         // Set min date to today
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
-    </script>
+    
+// Função enviar orçamento
+function enviarOrcamento(){
+    const local = document.getElementById("orcLocal").value;
+    const destino = document.getElementById("orcDestino").value;
+    const data = document.getElementById("orcData").value;
+    const hora = document.getElementById("orcHora").value;
+
+    const dataFormatada = data.split('-').reverse().join('/');
+
+    let mensagem = `Olá! Gostaria de solicitar um orçamento.
+
+`;
+    mensagem += `*Local de partida:* ${local}
+`;
+    mensagem += `*Destino:* ${destino}
+`;
+    mensagem += `*Data:* ${dataFormatada}
+`;
+    mensagem += `*Hora:* ${hora}
+`;
+
+    const texto = encodeURIComponent(mensagem);
+
+    window.open(`https://wa.me/77988331234?text=${texto}`, "_blank");
+
+    closeOrcamentoModal();
+}
+
+// Controle do modal de Orçamento
+function openOrcamentoModal(){
+    const modal = document.getElementById("orcamentoModal");
+    if(modal){
+        modal.style.display = "block";
+    }
+}
+
+function closeOrcamentoModal(){
+    const modal = document.getElementById("orcamentoModal");
+    if(modal){
+        modal.style.display = "none";
+    }
+}
+
+// Liga o botão do menu ao modal de orçamento
+document.addEventListener("DOMContentLoaded", function () {
+    const orcamentoLink = document.getElementById("orcamentoLink");
+    const orcamentoModal = document.getElementById("orcamentoModal");
+
+    if (orcamentoLink && orcamentoModal) {
+        orcamentoLink.addEventListener("click", function (e) {
+            e.preventDefault();
+            openOrcamentoModal();
+        });
+    }
+
+    // Fechar ao clicar fora
+    window.addEventListener("click", function (event) {
+        if (event.target === orcamentoModal) {
+            closeOrcamentoModal();
+        }
+    });
+});
+
+// Autocomplete Google Places (é chamado pelo callback do script do Maps)
+function initAutocomplete() {
+    initInlineAutocomplete();
+    const inputLocal = document.getElementById("orcLocal");
+    const inputDestino = document.getElementById("orcDestino");
+
+    if (!inputLocal || !inputDestino) {
+        return;
+    }
+
+    const options = { componentRestrictions: { country: "br" } };
+
+    new google.maps.places.Autocomplete(inputLocal, options);
+    new google.maps.places.Autocomplete(inputDestino, options);
+}
+
+
+// Voice recognition
+function startVoice(targetId){
+    let input = document.getElementById(targetId);
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SpeechRecognition){
+        alert("Reconhecimento de voz não suportado neste navegador.");
+        return;
+    }
+    const rec = new SpeechRecognition();
+    rec.lang = "pt-BR";
+    rec.interimResults = false;
+    rec.maxAlternatives = 1;
+    rec.start();
+
+    rec.onresult = (event)=>{
+        const text = event.results[0][0].transcript;
+        input.value = text;
+        // trigger map updates
+        const evt = new Event('change');
+        input.dispatchEvent(evt);
+    };
+}
+
+
+// Inline autocomplete
+function initInlineAutocomplete(){
+    const opt = { componentRestrictions: { country: "br" } };
+    const a = new google.maps.places.Autocomplete(document.getElementById("partidaInline"), opt);
+    const b = new google.maps.places.Autocomplete(document.getElementById("destinoInline"), opt);
+}
+
+
+
+function openOrcamentoFromInline(){
+    const p = document.getElementById("partidaInline").value;
+    const d = document.getElementById("destinoInline").value;
+    const lp = document.getElementById("orcLocal");
+    const ld = document.getElementById("orcDestino");
+    if(lp) lp.value = p;
+    if(ld) ld.value = d;
+    openOrcamentoModal();
+
+    // Geocode and update map
+    const geocoder = new google.maps.Geocoder();
+    origemCoord = null;
+    destinoCoord = null;
+
+    geocoder.geocode({ address: p }, (res, status)=>{
+        if(status==="OK" && res[0]){
+            origemCoord = res[0].geometry.location;
+            if(mapOrcamento){
+                mapOrcamento.setCenter(origemCoord);
+                mapOrcamento.setZoom(14);
+            }
+            // after origin, geocode destination
+            geocoder.geocode({ address: d }, (res2, status2)=>{
+                if(status2==="OK" && res2[0]){
+                    destinoCoord = res2[0].geometry.location;
+                    tryDrawRoute();
+                }
+            });
+        }
+    });
+}
+
+</script>
+
+<!-- Modal Orçamento -->
+<div id="orcamentoModal" class="form-modal">
+    <div class="form-content">
+        <span class="close" onclick="closeOrcamentoModal()">&times;</span>
+        <div class="form-header">
+            <h2>Solicitar Orçamento</h2>
+        </div>
+
+        <form id="orcamentoForm">
+            <div class="form-group">
+                <label for="orcLocal">Local de Partida:</label>
+                <div style="position:relative;"><input type="text" id="orcLocal" required><span onclick="startVoice(\'orcLocal\')" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:20px;">🎤</span></div>
+            </div>
+
+            <div class="form-group">
+                <label for="orcDestino">Local de Destino:</label>
+                <div style="position:relative;"><input type="text" id="orcDestino" required><span onclick="startVoice(\'orcDestino\')" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:20px;">🎤</span></div>
+            </div>
+
+            <div class="form-group">
+                <label for="orcData">Data:</label>
+                <input type="date" id="orcData" required>
+            </div>
+
+            <div class="form-group">
+                <label for="orcHora">Hora:</label>
+                <input type="time" id="orcHora" required>
+            </div>
+
+            <button type="button" class="form-submit" onclick="enviarOrcamento()">Enviar para WhatsApp</button>
+        </form>
+<div id="mapOrcamento" style="width:100%; height:260px; border-radius:8px; margin-top:16px;"></div>
+<div id="routeInfo" style="margin-top:12px; padding:12px; background:#eef3ff; border-radius:8px; font-size:15px; display:none;">
+  <strong>Distância:</strong> <span id="distanciaText"></span><br>
+  <strong>Tempo estimado:</strong> <span id="tempoText"></span>
+</div>
+
+    
+<br><strong>Valor estimado:</strong> R$ <span id="valorEstimado"></span>
+
+</div>
+</div>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADjzaw8qYnzunedO0B9A145OuNJFeojO8&libraries=places&callback=initAutocomplete" async defer></script>
+<script>
+var mapOrcamento;
+var directionsService;
+var directionsRenderer;
+var origemCoord = null;
+var destinoCoord = null;
+
+function initMapOrcamento(){
+    const el = document.getElementById("mapOrcamento");
+    if(!el) return;
+    mapOrcamento = new google.maps.Map(el, {
+        center: {lat:-14.8614, lng:-40.8442},
+        zoom: 13
+    });
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer({map: mapOrcamento});
+}
+
+function tryDrawRoute(){
+    if(origemCoord && destinoCoord){
+        directionsService.route({
+            origin: origemCoord,
+            destination: destinoCoord,
+            travelMode: google.maps.TravelMode.DRIVING
+        }, (res, status)=>{
+            if(status === google.maps.DirectionsStatus.OK){
+                directionsRenderer.setDirections(res);
+                let leg = res.routes[0].legs[0];
+                document.getElementById("distanciaText").textContent = leg.distance.text;
+                document.getElementById("tempoText").textContent = leg.duration.text;
+                document.getElementById("valorEstimado").textContent = calcularValor(leg.distance.text);
+                document.getElementById("routeInfo").style.display = "block";
+            }
+        });
+    }
+}
+
+function addPlaceListener(ac, type){
+    ac.addListener("place_changed", ()=>{
+        const place = ac.getPlace();
+        if(!place.geometry || !place.geometry.location) return;
+        const loc = place.geometry.location;
+        if(type==="origem") origemCoord = loc;
+        else destinoCoord = loc;
+        mapOrcamento.setCenter(loc);
+        mapOrcamento.setZoom(14);
+        tryDrawRoute();
+    });
+}
+
+// override initAutocomplete
+function initAutocomplete(){
+    initMapOrcamento();
+    const inputLocal = document.getElementById("orcLocal");
+    const inputDestino = document.getElementById("orcDestino");
+    const options = { componentRestrictions: {country:"br"}};
+    const a = new google.maps.places.Autocomplete(inputLocal, options);
+    
+    // Inline autocomplete
+    const a2 = new google.maps.places.Autocomplete(document.getElementById("partidaInline"), options);
+    const b2 = new google.maps.places.Autocomplete(document.getElementById("destinoInline"), options);
+    const b = new google.maps.places.Autocomplete(inputDestino, options);
+    addPlaceListener(a, "origem");
+    addPlaceListener(b, "destino");
+}
+</script>
 </body>
+
+
 </html>
