@@ -701,6 +701,17 @@
 .orcamento-inline button:hover {
     background: #333;
 }
+
+/* ===== NOVA REGRA PARA ELEVAR A BARRA NO CELULAR ===== */
+@media (max-width: 768px) {
+    .orcamento-inline {
+        top: 20px !important;   /* Sobe a barra para ficar visível logo abaixo do menu */
+    }
+    /* Ajusta o espaçamento inferior do conteúdo da hero para não sobrepor */
+    .hero-content {
+        margin-bottom: 80px;
+    }
+}
 </style>
 </head>
 <body>
@@ -728,7 +739,7 @@
                             <img src="https://res.cloudinary.com/victorhugo/image/upload/v1676419801/1_fqiddq.jpg" alt="Taxi no aeroporto">
                         </div>
                         <div class="carousel-item">
-                            <img src="https://www.autodemolidorasinos.com.br/arquivos/produtos/fiat-grand-siena-2014-2015-14-8v-flex-88cv-cambio-manual-2-1599668508.jpg" alt="Motorista profissional">
+                            <img src="https://res.cloudinary.com/victorhugo/image/upload/v1771216916/Fiat-Grand-Siena-Essence-2013-prata_2_hoe3h4.jpg" alt="Motorista profissional">
                         </div>
                     </div>
                     <div class="carousel-indicators">
@@ -806,10 +817,8 @@
     <section class="hero" id="home">
         
 <nav>
-    <a href="#home" id="homeBtn">Inicio</a>
     <a href="#" id="aboutLink">Sobre</a>
     <a href="#servicos">Serviços</a>
-    <a href="#" id="orcamentoLink">Orçamento</a>
     <a href="#contato">Contato</a>
 </nav>
 
@@ -1095,7 +1104,7 @@ function calcularValor(distText){
         // Set min date to today
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
     
-// Função enviar orçamento
+// Função enviar orçamento (MODIFICADA para incluir o valor estimado)
 function enviarOrcamento(){
     const local = document.getElementById("orcLocal").value;
     const destino = document.getElementById("orcDestino").value;
@@ -1104,22 +1113,22 @@ function enviarOrcamento(){
 
     const dataFormatada = data.split('-').reverse().join('/');
 
-    let mensagem = `Olá! Gostaria de solicitar um orçamento.
+    let mensagem = `Olá! Gostaria de solicitar um orçamento.\n\n`;
+    mensagem += `*Local de partida:* ${local}\n`;
+    mensagem += `*Destino:* ${destino}\n`;
+    mensagem += `*Data:* ${dataFormatada}\n`;
+    mensagem += `*Hora:* ${hora}\n`;
 
-`;
-    mensagem += `*Local de partida:* ${local}
-`;
-    mensagem += `*Destino:* ${destino}
-`;
-    mensagem += `*Data:* ${dataFormatada}
-`;
-    mensagem += `*Hora:* ${hora}
-`;
+    const valorEstimadoElement = document.getElementById("valorEstimado");
+    if (valorEstimadoElement && valorEstimadoElement.innerText.trim() !== '') {
+        mensagem += `*Valor estimado:* R$ ${valorEstimadoElement.innerText.trim()}\n`;
+        mensagem += `*Observação:* O valor pode variar de acordo com o trânsito e a rota escolhida.\n`;
+    } else {
+        mensagem += `*Observação:* O valor será informado após a confirmação do serviço.\n`;
+    }
 
     const texto = encodeURIComponent(mensagem);
-
     window.open(`https://wa.me/77988331234?text=${texto}`, "_blank");
-
     closeOrcamentoModal();
 }
 
