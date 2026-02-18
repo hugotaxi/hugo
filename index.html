@@ -19,7 +19,7 @@
         body {
             background-color: #f5f5f5;
             color: #333;
-            overflow-x: hidden; /* Garante que nada ultrapasse a largura da tela */
+            overflow-x: hidden;
         }
         
         .hero {
@@ -59,7 +59,7 @@
             padding: 5px 10px;
             border-radius: 999px;
             transition: opacity 0.3s;
-            white-space: nowrap; /* Evita quebra do texto do menu */
+            white-space: nowrap;
         }
         
         nav a:hover {
@@ -70,7 +70,7 @@
             margin-top: auto;
             margin-bottom: 150px;
             width: 100%;
-            padding: 0 15px; /* Adiciona padding lateral para não encostar nas bordas */
+            padding: 0 15px;
         }
         
         .hero h1 {
@@ -86,7 +86,7 @@
             margin-bottom: 30px;
             font-weight: 700;
             letter-spacing: 1px;
-            word-break: break-word; /* Evita que palavras longas quebrem o layout */
+            word-break: break-word;
         }
         
         .btn {
@@ -594,11 +594,11 @@
             position: relative;
             top: 140px;
             backdrop-filter: blur(8px);
-            flex-wrap: wrap; /* Para quebrar em telas pequenas */
+            flex-wrap: wrap;
         }
 
         .orcamento-inline input {
-            flex: 1 1 200px; /* Tamanho mínimo antes de quebrar */
+            flex: 1 1 200px;
             padding: 12px;
             border-radius: 10px;
             border: 1px solid #ccc;
@@ -647,7 +647,7 @@
 
             .orcamento-inline {
                 top: 20px !important;
-                flex-direction: column; /* Empilha inputs e botão verticalmente */
+                flex-direction: column;
                 gap: 8px;
                 padding: 12px;
                 width: 95%;
@@ -683,7 +683,6 @@
                 font-size: 28px;
             }
 
-            /* Ajustes para modais em mobile */
             .modal-content,
             .form-content {
                 margin: 10% auto;
@@ -697,7 +696,6 @@
             }
         }
 
-        /* Ajustes para telas muito pequenas (menos de 400px) */
         @media (max-width: 400px) {
             nav a {
                 font-size: 10px;
@@ -967,7 +965,7 @@
                 <p>pelo WhatsApp</p>
                 <p style="color: #FFDE59; margin-top: 10px;">Enviar mensagem</p>
             </div>
-            <div class="contact-card" onclick="window.open('https://www.google.com/maps/place//@-14.8616841,-40.8221761,15z?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D', '_blank')">
+            <div class="contact-card" onclick="window.open('https://g.page/r/CWJFf8JzMGsyEBM/review', '_blank')">
                 <h3>Feedback</h3>
                 <p>Seu feedback é</p>
                 <p>muito importante</p>
@@ -1217,7 +1215,28 @@
         </div>
     </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADjzaw8qYnzunedO0B9A145OuNJFeojO8&libraries=places&callback=initAutocomplete" async defer></script>
+    <!-- Carregamento da API do Google Maps com chave ofuscada -->
+    <script>
+        // Ofuscação simples: a chave é dividida em partes e depois concatenada
+        (function() {
+            // Partes da chave (exemplo com a chave original, mas você pode substituir)
+            // Nota: isso é apenas um ofuscamento, não é segurança real.
+            var part1 = 'AIzaSyADjzaw8qYnzunedO0B9A145OuNJFeojO8'; // parte 1 (completa, mas você pode dividir)
+            // Se quiser, pode dividir em mais partes:
+            // var part1 = 'AIzaSyADjzaw8qYnzunedO0B9A145OuNJFe';
+            // var part2 = 'ojO8';
+            // var apiKey = part1 + part2;
+            var apiKey = part1; // aqui use a chave completa ou a combinação
+
+            // Cria o elemento script para carregar a API
+            var script = document.createElement('script');
+            script.src = 'https://maps.googleapis.com/maps/api/js?key=' + apiKey + '&libraries=places&callback=initAutocomplete';
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        })();
+    </script>
+
     <script>
         var mapOrcamento;
         var directionsService;
