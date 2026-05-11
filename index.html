@@ -981,11 +981,13 @@
     </section>
 
     <script>
-        // Fare calculation
+        // Fare calculation: bandeirada R$5,00 + R$4,31/km, arredondado para 0.50 mais próximo
         function calcularValor(distText){
             let num = parseFloat(distText.replace(",", "."));
             if(isNaN(num)) return "0,00";
-            let valor = 5.0 + 2.5 * num;
+            let valor = 5.0 + 4.31 * num;
+            // arredonda para o múltiplo de 0.50 mais próximo
+            valor = Math.round(valor * 2) / 2;
             return valor.toFixed(2).replace(".", ",");
         }
 
