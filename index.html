@@ -419,6 +419,38 @@
     </div>
 
     <script>
+        // Função para verificar horário noturno (21:00 até 06:59)
+        function isHorarioNoturno() {
+            const agora = new Date();
+            const hora = agora.getHours();
+            // entre 21h e 23:59 ou entre 0h e 6:59
+            return (hora >= 21 || hora < 7);
+        }
+
+        // Função que exibe a notificação de ligação e retorna true se o usuário aceitar ligar, false caso contrário (cancelar)
+        function perguntarLigacao() {
+            const agora = new Date();
+            const horaAtual = agora.getHours().toString().padStart(2,'0');
+            const minutosAtual = agora.getMinutes().toString().padStart(2,'0');
+            return confirm(`⚠️ Horário atual: ${horaAtual}:${minutosAtual}\n\nApós as 21:00 e antes das 07:00, o atendimento via WhatsApp pode não ser imediato.\n\n📞 Deseja ligar agora para (77) 98833-1234?\n\n(Clique em "Cancelar" se quiser enviar a mensagem mesmo assim.)`);
+        }
+
+        // Função central que processa o envio da mensagem após verificação noturna
+        function enviarMensagemComVerificacao(mensagem) {
+            if (isHorarioNoturno()) {
+                const querLigar = perguntarLigacao();
+                if (querLigar) {
+                    window.location.href = "tel:77988331234";
+                    return false; // Não enviar a mensagem
+                }
+                // Se cancelou, continua para enviar a mensagem
+            }
+            // Envia a mensagem para o WhatsApp
+            window.open(`https://wa.me/77988331234?text=${encodeURIComponent(mensagem)}`, '_blank');
+            return true;
+        }
+
+        // Função de cálculo de valor (bandeirada + km)
         function calcularValor(distText){
             let num = parseFloat(distText.replace(",", "."));
             if(isNaN(num)) return "0,00";
@@ -433,8 +465,10 @@
         document.querySelector("#aboutModal .close").onclick = function(){ modal.style.display = "none"; };
         window.onclick = function(event) { if (event.target == modal) modal.style.display = "none"; };
 
+        // Botão WhatsApp principal
         document.getElementById("whatsappBtn").addEventListener("click", function() {
-            window.open("https://wa.me/77988331234?text=Olá%20gostaria%20de%20solicitar%20uma%20corrida", "_blank");
+            const mensagem = "Olá, gostaria de solicitar uma corrida.";
+            enviarMensagemComVerificacao(mensagem);
         });
 
         // Carrossel
@@ -460,7 +494,7 @@
             const service = document.getElementById("serviceType").value;
             let msg = `Olá Hugo, serviço de ${service}.\nNome: ${name}\nTelefone: ${phone}\nPartida: ${origin}\nDestino: ${destination}\nData: ${date}\nHora: ${time}`;
             if(notes) msg += `\nObservações: ${notes}`;
-            window.open(`https://wa.me/77988331234?text=${encodeURIComponent(msg)}`, '_blank');
+            enviarMensagemComVerificacao(msg);
             closeFormModal();
         };
         window.addEventListener('click', (e)=> { if(e.target == formModal) closeFormModal(); });
@@ -477,22 +511,8 @@
             rec.onresult = (event)=> { input.value = event.results[0][0].transcript; };
         };
 
-        // ORÇAMENTO: verifica horário atual e oferece ligação, mas se recusar envia WhatsApp
+        // Orçamento
         window.enviarOrcamento = function() {
-            const agora = new Date();
-            const horaAtual = agora.getHours();
-            const minutosAtual = agora.getMinutes();
-            
-            if (horaAtual >= 21) {
-                const ligar = confirm(`⚠️ Horário atual: ${horaAtual.toString().padStart(2,'0')}:${minutosAtual.toString().padStart(2,'0')}\n\nApós as 21:00, o atendimento via WhatsApp pode não ser imediato.\n\n📞 Deseja ligar agora para (77) 98833-1234?\n\n(Clique em "Cancelar" se quiser enviar a mensagem mesmo assim.)`);
-                if (ligar) {
-                    window.location.href = "tel:77988331234";
-                    return; // Se ligar, não envia a mensagem.
-                }
-                // Se o usuário cancelar (não quiser ligar), continua para enviar a mensagem.
-            }
-            
-            // Monta e envia a mensagem do orçamento (caso horário normal OU usuário tenha cancelado a ligação)
             const local = document.getElementById("orcLocal").value;
             const destino = document.getElementById("orcDestino").value;
             const data = document.getElementById("orcData").value.split('-').reverse().join('/');
@@ -504,7 +524,7 @@
             } else {
                 mensagem += `*Observação:* Valor será informado após confirmação.\n`;
             }
-            window.open(`https://wa.me/77988331234?text=${encodeURIComponent(mensagem)}`, "_blank");
+            enviarMensagemComVerificacao(mensagem);
             closeOrcamentoModal();
         };
 
