@@ -1095,16 +1095,6 @@
                 <div class="service-type" id="serviceTypeDisplay">Serviço: Táxi Urbano</div>
             </div>
             <form id="serviceForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="name">Nome completo</label>
-                        <input type="text" id="name" placeholder="Seu nome" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Telefone / WhatsApp</label>
-                        <input type="tel" id="phone" placeholder="(77) 90000-0000" required>
-                    </div>
-                </div>
                 <div class="form-group">
                     <label for="origin">Local de Partida</label>
                     <input type="text" id="origin" placeholder="Rua, bairro ou ponto de referência" required>
@@ -1534,8 +1524,6 @@ Após as 21:00 e antes das 07:00, o atendimento via WhatsApp pode não ser imedi
         window.closeFormModal = () => formModal.style.display = "none";
 
         window.submitForm = function(){
-            const name = document.getElementById("name").value;
-            const phone = document.getElementById("phone").value;
             const origin = document.getElementById("origin").value;
             const destination = document.getElementById("destination").value;
             const date = document.getElementById("date").value ? document.getElementById("date").value.split('-').reverse().join('/') : '';
@@ -1544,8 +1532,6 @@ Após as 21:00 e antes das 07:00, o atendimento via WhatsApp pode não ser imedi
             const service = document.getElementById("serviceType").value;
 
             let msg = `Olá Hugo, serviço de ${service}.
-Nome: ${name}
-Telefone: ${phone}
 Partida: ${origin}
 Destino: ${destination}
 Data: ${date}
