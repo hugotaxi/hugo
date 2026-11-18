@@ -1051,7 +1051,7 @@
     <!-- Modal Sobre -->
     <div id="aboutModal" class="modal">
         <div class="modal-content">
-            <span class="close">×</span>
+            <span class="close">&times;</span>
             <div class="modal-header">
                 <h2>Sobre Hugo — Taxista Profissional</h2>
             </div>
@@ -1089,7 +1089,7 @@
     <!-- Modal Agendamento por Serviço -->
     <div id="formModal" class="form-modal">
         <div class="form-content">
-            <span class="close" onclick="closeFormModal()">×</span>
+            <span class="close" onclick="closeFormModal()">&times;</span>
             <div class="form-header">
                 <h2>Solicitar Serviço</h2>
                 <div class="service-type" id="serviceTypeDisplay">Serviço: Táxi Urbano</div>
@@ -1269,7 +1269,7 @@
                             <span class="material-icons-round">star</span>
                             <span class="material-icons-round">star</span>
                         </div>
-                        <p>"Serviço excelente, motorista pontual e educado. Carro sempre limpo e muito confortável."</p>
+                        <p>"Pontualidade impecável! Agendei minha ida ao Aeroporto Glauber Rocha de madrugada e o Hugo já estava na porta minutos antes do combinado. Carro muito limpo e confortável."</p>
                     </div>
                     <div class="client-info">
                         <div class="client-avatar">CP</div>
@@ -1288,7 +1288,7 @@
                             <span class="material-icons-round">star</span>
                             <span class="material-icons-round">star</span>
                         </div>
-                        <p>"Preços justos, transparência no orçamento e um profissional exemplar. Recomendo sem dúvidas."</p>
+                        <p>"Sempre utilizo para deslocamentos em Vitória da Conquista e viagens para cidades vizinhas. Direção super segura, ar-condicionado gelando e valor justo combinado antes da corrida."</p>
                     </div>
                     <div class="client-info">
                         <div class="client-avatar">KS</div>
@@ -1307,7 +1307,7 @@
                             <span class="material-icons-round">star</span>
                             <span class="material-icons-round">star</span>
                         </div>
-                        <p>"Atendimento rápido e seguro para o aeroporto. Nunca me deixou na mão nos horários de voo."</p>
+                        <p>"Atendimento nota dez! Além de muito educado e atencioso com as malas, passa total confiança para toda a família. Hoje é o único táxi que chamo na cidade."</p>
                     </div>
                     <div class="client-info">
                         <div class="client-avatar">EO</div>
@@ -1359,7 +1359,7 @@
     </section>
 
     <footer>
-        <p>© <span id="currentYear"></span> Hugo Táxi — Vitória da Conquista, BA. Todos os direitos reservados.</p>
+        <p>&copy; <span id="currentYear"></span> Hugo Táxi — Vitória da Conquista, BA. Todos os direitos reservados.</p>
     </footer>
 
     <!-- Botão Flutuante WhatsApp -->
@@ -1370,7 +1370,7 @@
     <!-- Modal de Orçamento com Mapa -->
     <div id="orcamentoModal" class="form-modal">
         <div class="form-content">
-            <span class="close" onclick="closeOrcamentoModal()">×</span>
+            <span class="close" onclick="closeOrcamentoModal()">&times;</span>
             <div class="form-header">
                 <h2>Simular Orçamento</h2>
             </div>
@@ -1465,7 +1465,13 @@
             const agora = new Date();
             const horaAtual = agora.getHours().toString().padStart(2,'0');
             const minutosAtual = agora.getMinutes().toString().padStart(2,'0');
-            return confirm(`⚠️ Horário atual: ${horaAtual}:${minutosAtual}\n\nApós as 21:00 e antes das 07:00, o atendimento via WhatsApp pode não ser imediato.\n\n📞 Deseja ligar agora para (77) 98833-1234?\n\n(Clique em "Cancelar" se quiser enviar a mensagem mesmo assim.)`);
+            return confirm(`⚠️ Horário atual: ${horaAtual}:${minutosAtual}
+
+Após as 21:00 e antes das 07:00, o atendimento via WhatsApp pode não ser imediato.
+
+📞 Deseja ligar agora para (77) 98833-1234?
+
+(Clique em "Cancelar" se quiser enviar a mensagem mesmo assim.)`);
         }
 
         // Envio centralizado com verificação noturna
@@ -1537,8 +1543,15 @@
             const notes = document.getElementById("notes").value;
             const service = document.getElementById("serviceType").value;
 
-            let msg = `Olá Hugo, serviço de ${service}.\nNome: ${name}\nTelefone: ${phone}\nPartida: ${origin}\nDestino: ${destination}\nData: ${date}\nHora: ${time}`;
-            if(notes) msg += `\nObservações: ${notes}`;
+            let msg = `Olá Hugo, serviço de ${service}.
+Nome: ${name}
+Telefone: ${phone}
+Partida: ${origin}
+Destino: ${destination}
+Data: ${date}
+Hora: ${time}`;
+            if(notes) msg += `
+Observações: ${notes}`;
             enviarMensagemComVerificacao(msg);
             closeFormModal();
         };
@@ -1575,12 +1588,21 @@
             const data = document.getElementById("orcData").value ? document.getElementById("orcData").value.split('-').reverse().join('/') : '';
             const hora = document.getElementById("orcHora").value;
 
-            let mensagem = `Olá! Gostaria de solicitar um orçamento.\n\n*Local de partida:* ${local}\n*Destino:* ${destino}\n*Data:* ${data}\n*Hora:* ${hora}\n`;
+            let mensagem = `Olá! Gostaria de solicitar um orçamento.
+
+*Local de partida:* ${local}
+*Destino:* ${destino}
+*Data:* ${data}
+*Hora:* ${hora}
+`;
             const valorSpan = document.getElementById("valorEstimado");
             if (valorSpan && valorSpan.innerText.trim() !== '' && valorSpan.innerText.trim() !== '0,00') {
-                mensagem += `*Valor estimado:* R$ ${valorSpan.innerText.trim()}\n*Observação:* O valor pode variar conforme trânsito.\n`;
+                mensagem += `*Valor estimado:* R$ ${valorSpan.innerText.trim()}
+*Observação:* O valor pode variar conforme trânsito.
+`;
             } else {
-                mensagem += `*Observação:* Valor será informado após confirmação.\n`;
+                mensagem += `*Observação:* Valor será informado após confirmação.
+`;
             }
             enviarMensagemComVerificacao(mensagem);
             closeOrcamentoModal();
